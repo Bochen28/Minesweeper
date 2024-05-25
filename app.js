@@ -147,6 +147,9 @@ window.onload = function () {
       return;
     }
 
+    // Reveal the field
+    field.style.background = "#ffffff";
+
     // If the field is empty, reveal adjacent empty fields
     if (shuffledArr[index] === "valid") {
       const visited = new Array(size * size).fill(false);
