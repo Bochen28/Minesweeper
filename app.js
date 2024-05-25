@@ -47,22 +47,10 @@ window.onload = function () {
       field.id = index;
       field.classList.add("field");
       field.addEventListener("contextmenu", flag);
+      field.addEventListener("click", (event) => handleClick(event, index, size, shuffledArr));
+
       if (shuffledArr[index] === "mine") {
         field.classList.add("mine");
-        field.addEventListener("click", explosion);
-      } else {
-        const adjacentMines = countAdjacentMines(index, size, shuffledArr);
-        if (adjacentMines > 0) {
-          field.addEventListener("click", () => {
-            field.style.background = "#ffffff";
-            field.innerText = adjacentMines;
-          });
-        } else {
-          field.addEventListener("click", () => {
-            field.style.background = "#ffffff";
-            handleClick(event, index, size, shuffledArr);
-          });
-        }
       }
       gameBox.appendChild(field);
     }
@@ -173,7 +161,6 @@ window.onload = function () {
       const field = event.target;
       if (field.innerHTML === "🚩") {
         field.innerHTML = "";
-        field.addEventListener("click", explosion);
         flagCount++;
         if (field.classList.contains("mine")) {
           minesLeft++;
@@ -181,7 +168,6 @@ window.onload = function () {
       } else {
         if (flagCount > 0) {
           field.innerHTML = "🚩";
-          field.removeEventListener("click", explosion);
           flagCount--;
           if (field.classList.contains("mine")) {
             minesLeft--;
