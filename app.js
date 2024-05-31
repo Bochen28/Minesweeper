@@ -123,6 +123,7 @@ window.onload = function () {
             shuffledArr
           );
           if (adjacentMines === 0) {
+            field.innerText = "";
             revealEmptyFields(neighborIndex, size, shuffledArr, visited);
           } else {
             field.innerText = adjacentMines;
@@ -137,7 +138,7 @@ window.onload = function () {
     const field = event.target;
 
     // If the field is already revealed or flagged, do nothing
-    if (field.innerText !== "" || field.innerHTML === "🚩") {
+    if (field.style.background === "white" || field.innerHTML === "🚩") {
       return;
     }
 
@@ -151,9 +152,13 @@ window.onload = function () {
     field.style.background = "#ffffff";
 
     // If the field is empty, reveal adjacent empty fields
-    if (shuffledArr[index] === "valid") {
+    const adjacentMines = countAdjacentMines(index, size, shuffledArr);
+    if (adjacentMines === 0) {
       const visited = new Array(size * size).fill(false);
+      visited[index] = true;
       revealEmptyFields(index, size, shuffledArr, visited);
+    } else {
+      field.innerText = adjacentMines;
     }
   }
 
